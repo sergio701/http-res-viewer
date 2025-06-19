@@ -4,8 +4,11 @@ function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen">
       <header className="shadow-sm shadow-black sticky top-0 bg-background">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex place-content-between items-center">
           <h1 className="text-2xl font-bold">HTTP Response Viewer</h1>
+          <span className="text-md text-white hidden md:inline-block">
+            Sergio Ramirez Gonzalez
+          </span>
         </div>
       </header>
       <main>

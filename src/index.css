@@ -6,6 +6,7 @@
 
 @theme {
   --default-font-family: 'Instrument Sans', sans-serif;
+  --color-ember: #dd3508;
 }
 
 @theme inline {

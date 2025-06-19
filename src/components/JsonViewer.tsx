@@ -7,13 +7,27 @@ export type JsonViewerProps = {
 } & HTMLAttributes<HTMLDivElement>;
 
 function JsonViewer({ json, className, ...props }: JsonViewerProps) {
-  const jsonObj = json ? JSON.parse(json) : {};
+  let jsonObj = {};
+  let invalidJson = false;
+
+  try {
+    jsonObj = json ? JSON.parse(json) : {};
+  } catch {
+    invalidJson = true;
+  }
+
   return (
     <div
       className={cn('bg-gray-200 w-full min-h-[300px] rounded p-4', className)}
       {...props}
     >
-      <ReactJsonViewer src={jsonObj} />
+      {invalidJson ? (
+        <pre className="whitespace-pre-wrap break-words text-black">
+          <code>Invalid JSON!</code>
+        </pre>
+      ) : (
+        <ReactJsonViewer src={jsonObj} />
+      )}
     </div>
   );
 }

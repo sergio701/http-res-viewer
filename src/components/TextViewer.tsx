@@ -8,10 +8,15 @@ type TextViewerProps = {
 function TextViewer({ text, className, ...props }: TextViewerProps) {
   return (
     <div
-      className={cn('bg-gray-200 w-full min-h-[300px] rounded p-4', className)}
+      className={cn(
+        'bg-gray-200 text-black w-full min-h-[300px] rounded p-4',
+        className,
+      )}
       {...props}
     >
-      <pre className="whitespace-pre-wrap break-words">{text}</pre>
+      <pre className="whitespace-pre-wrap break-words">
+        <code>{text}</code>
+      </pre>
     </div>
   );
 }

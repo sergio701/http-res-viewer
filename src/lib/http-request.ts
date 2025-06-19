@@ -11,7 +11,7 @@ export const parseHttpRequest = (rawRequest: string): HttpRequest => {
       .replace(/^\s*[\r\n]+/, '') // remove empty lines at start
       .replace(/[\r\n]+\s*$/, ''); // remove empty lines at end
 
-    // Try to split on the first occurrence of two or more newlines
+    // Split on the first occurrence of two or more newlines
     const match = trimmedRequest.match(/([\s\S]*?)(?:\r?\n){2,}([\s\S]*)/);
     let header = trimmedRequest;
     let body = undefined;
@@ -72,8 +72,7 @@ export const parseHttpRequest = (rawRequest: string): HttpRequest => {
     result.date = getDateFromString(result.headers['date'] || '');
     result.ok = flags.ok;
     result.redirect = flags.redirect;
-  } catch (e) {
-    console.error('Failed to parse HTTP request:', e);
+  } catch {
     result.error = 'Failed to parse HTTP request';
   }
 

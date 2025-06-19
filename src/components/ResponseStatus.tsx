@@ -59,7 +59,7 @@ function ResponseStatus({
             <td className="pl-4">{size}</td>
           </tr>
           <tr>
-            <th className="text-left">Date:</th>
+            <th className="text-left">Local Date:</th>
             <td className="pl-4">{date?.toLocaleString?.() ?? ''}</td>
           </tr>
         </tbody>

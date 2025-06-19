@@ -12,7 +12,10 @@ function XmlViewer({ xml, className, ...props }: XmlViewerProps) {
       className={cn('bg-gray-200 w-full min-h-[300px] rounded p-4', className)}
       {...props}
     >
-      <ReactXmlViewer xml={xml} />
+      <ReactXmlViewer
+        xml={xml}
+        invalidXml={<div className="text-black">Invalid XML!</div>}
+      />
     </div>
   );
 }
