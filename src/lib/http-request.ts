@@ -33,7 +33,7 @@ export const parseHttpRequest = (rawRequest: string): HttpRequest => {
     // Parse status/request line
     const statusLine = lines[0];
     const statusLineMatch = statusLine.match(
-      /^(HTTP\/\d\.\d)\s+(\d{3})\s+(.*)$/,
+      /^(HTTP\/[^\s]+)\s+(\d{3})(?:\s+(.*))?$/i,
     );
 
     if (statusLineMatch) {
