@@ -10,7 +10,6 @@ function HttpViewer() {
   const [inputValue, setInputValue] = useState('');
   const debouncedParseRef = useRef<(value: string) => void>(
     debounce((value: string) => {
-      console.log('Parsing HTTP request:', value);
       const result = parseHttpRequest(value);
       setParsedRequest(result);
     }, 1000),
@@ -27,28 +26,26 @@ function HttpViewer() {
     }
   }, [inputValue]);
 
-  console.log('Parsed Request:', parsedRequest);
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 mt-4">
-      <div className="lg:col-span-5 xl:col-span-4 min-h-[70dvh]">
+      <section className="lg:col-span-5 xl:col-span-4 min-h-[70dvh] flex flex-col">
         <Textarea
           name="request"
           placeholder="Enter HTTP request here..."
-          className="h-full"
+          className="flex-1"
           value={inputValue}
           onChange={handleChange}
         />
-      </div>
-      <div className="lg:col-span-7 xl:col-span-8">
-        <h3 className="text-lg font-semibold mb-2">Response</h3>
-        {inputValue.length && parsedRequest ? (
-          <ResponseViewer
-            request={parsedRequest}
-            className="p-4 rounded shadow"
-          />
+        {parsedRequest?.error?.length && inputValue.length ? (
+          <div className="text-sm text-red-400 mt-2">{parsedRequest.error}</div>
         ) : null}
-      </div>
+      </section>
+      <section className="lg:col-span-7 xl:col-span-8">
+        <h2 className="text-lg font-semibold mb-2">Response</h2>
+        {inputValue.length && parsedRequest ? (
+          <ResponseViewer request={parsedRequest} />
+        ) : null}
+      </section>
     </div>
   );
 }

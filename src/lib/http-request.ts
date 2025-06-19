@@ -11,16 +11,21 @@ export const parseHttpRequest = (rawRequest: string): HttpRequest => {
       .replace(/^\s*[\r\n]+/, '') // remove empty lines at start
       .replace(/[\r\n]+\s*$/, ''); // remove empty lines at end
 
-    // Split on the first occurrence of two or more newlines
-    const [, header, body] =
-      trimmedRequest.match(/([\s\S]*?)(?:\r?\n){2,}([\s\S]*)/) || [];
+    // Try to split on the first occurrence of two or more newlines
+    const match = trimmedRequest.match(/([\s\S]*?)(?:\r?\n){2,}([\s\S]*)/);
+    let header = trimmedRequest;
+    let body = undefined;
+    if (match) {
+      header = match[1];
+      body = match[2];
+    }
 
     const lines = header
-      .split(/\r?\n/)
-      .map(line => line.trim())
-      .filter(Boolean);
+      ?.split(/\r?\n/)
+      ?.map(line => line.trim())
+      ?.filter(Boolean);
 
-    if (lines.length === 0) {
+    if (!lines?.length) {
       result.error = 'Empty request';
       return result;
     }
@@ -57,7 +62,7 @@ export const parseHttpRequest = (rawRequest: string): HttpRequest => {
       result.body = body.trim();
     } else {
       result.error =
-        'Body not found. Be sure there is an empty line between the headers and the content.';
+        'Content not found. Be sure there is an empty line between the headers and the content.';
     }
     const flags = getStatusFlags(result.statusCode);
     result.type = getTypeFromContentType(result.headers['content-type'] || '');
@@ -67,7 +72,8 @@ export const parseHttpRequest = (rawRequest: string): HttpRequest => {
     result.date = getDateFromString(result.headers['date'] || '');
     result.ok = flags.ok;
     result.redirect = flags.redirect;
-  } catch {
+  } catch (e) {
+    console.error('Failed to parse HTTP request:', e);
     result.error = 'Failed to parse HTTP request';
   }
 

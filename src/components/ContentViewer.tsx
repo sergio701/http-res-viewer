@@ -1,31 +1,25 @@
 import type { HTMLAttributes } from 'react';
 import HtmlViewer from './HtmlViewer';
-import { cn } from '@/lib/utils';
+import XMLViewer from './XmlViewer';
+import JsonViewer from './JsonViewer';
+import TextViewer from './TextViewer';
 
 type ContentViewerProps = {
   content: string;
   type?: string;
 } & HTMLAttributes<HTMLDivElement>;
 
-function ContentViewer({
-  content,
-  type,
-  className,
-  ...props
-}: ContentViewerProps) {
+function ContentViewer({ content, type, ...props }: ContentViewerProps) {
   return (
     <div {...props}>
       {type === 'html' ? (
         <HtmlViewer html={content} />
+      ) : type === 'json' ? (
+        <JsonViewer json={content} />
+      ) : type === 'xml' ? (
+        <XMLViewer xml={content} />
       ) : (
-        <pre
-          className={cn(
-            'bg-gray-900 text-white rounded shadow overflow-x-auto',
-            className,
-          )}
-        >
-          <code>{content}</code>
-        </pre>
+        <TextViewer text={content} />
       )}
     </div>
   );

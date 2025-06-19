@@ -12,7 +12,7 @@ function ResponseHeaders({ headers, ...props }: ResponseHeadersProps) {
           {Object.entries(headers).map(([key, value]) => (
             <tr key={key}>
               <td className="capitalize">{key}:</td>
-              <td>{value}</td>
+              <td className="pl-4">{value}</td>
             </tr>
           ))}
         </tbody>

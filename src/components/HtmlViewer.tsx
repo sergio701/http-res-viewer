@@ -8,11 +8,9 @@ type HtmlViewerProps = {
 function HtmlViewer({ html, className, ...props }: HtmlViewerProps) {
   return (
     <iframe
-      {...props}
       srcDoc={html}
       className={cn('bg-gray-200 w-full min-h-[300px] rounded', className)}
-      sandbox="allow-same-origin allow-scripts"
-      title="HTML Viewer"
+      {...props}
     />
   );
 }

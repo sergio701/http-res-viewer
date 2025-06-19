@@ -3,19 +3,15 @@ import ResponseStatus from './ResponseStatus';
 import ResponseHeaders from './ResponseHeaders';
 import ContentViewer from './ContentViewer';
 import type { HttpRequest } from '@/types';
-import { cn } from '@/lib/utils';
 
 export type ResponseViewerProps = {
   request: HttpRequest;
 } & HtmlHTMLAttributes<HTMLDivElement>;
 
-function ResponseViewer({ request, className, ...props }: ResponseViewerProps) {
+function ResponseViewer({ request, ...props }: ResponseViewerProps) {
   return (
-    <>
-      <div
-        className={cn('grid grid-cols-1 xl:grid-cols-2 gap-2', className)}
-        {...props}
-      >
+    <div {...props}>
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-2">
         <ResponseStatus {...request} />
         <div>
           <h5 className="text-md font-semibold my-2">Headers</h5>
@@ -31,7 +27,7 @@ function ResponseViewer({ request, className, ...props }: ResponseViewerProps) {
           <ContentViewer content={request.body} type={request.type} />
         </div>
       ) : null}
-    </>
+    </div>
   );
 }
 
